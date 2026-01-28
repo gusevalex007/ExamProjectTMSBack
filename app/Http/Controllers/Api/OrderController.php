@@ -101,7 +101,7 @@ class OrderController extends Controller
     
         $validated = $request->validate([
             // customer_id больше НЕ required (может прийти или нет)
-            'customer_id' => 'nullable|integer',
+            'customer_id' => 'nullable|exists:users,id',
     
             // telegram_id для TMA (может прийти или нет)
             'telegram_id' => 'nullable|integer',

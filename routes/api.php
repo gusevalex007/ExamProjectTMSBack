@@ -33,6 +33,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/projects/{project}/products', [ProductController::class, 'store']);
     Route::apiResource('products', ProductController::class)->except(['index', 'store']);
 
+    // Файлы продуктов
+    Route::post('/products/{product}/files', [ProductController::class, 'uploadFile']);
+    Route::delete('/product-files/{fileId}', [ProductController::class, 'deleteFile']);
+
+
     // Orders
     Route::get('/projects/{project}/orders', [OrderController::class, 'index']);
     Route::post('/projects/{project}/orders', [OrderController::class, 'store']);
@@ -53,7 +58,11 @@ Route::post('/tma/auth', [TmaAuthController::class, 'auth']);
 
 // TMA API (protected)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/tma/{project}/products', [TmaController::class, 'products']);
+    Route::get('/tma/{project}/products', [TmaController::class, 'getProducts']);
     Route::get('/tma/{project}/config', [TmaController::class, 'config']);
     Route::post('/tma/{project}/orders', [TmaController::class, 'createOrder']);
+    // === НОВЫЕ РОУТЫ ===
+    Route::get('/courses/{course}/lessons', [TmaController::class, 'getCourseLessons']);
+    Route::post('/products/{product}/download', [TmaController::class, 'downloadDigital']);
+    Route::post('/quote-request', [TmaController::class, 'createQuoteRequest']); 
 });
